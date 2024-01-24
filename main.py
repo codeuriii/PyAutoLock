@@ -1,5 +1,24 @@
 import bluetooth
 import time
+import json
+
+with open("config.json", "r") as f:
+    config = json.load(f)
+
+if config['macadress'] == "":
+    temp_data = {}
+    nearby_devices = bluetooth.discover_devices(lookup_names=True)
+    print("Found {} devices.".format(len(nearby_devices)))
+
+    for addr, name in nearby_devices:
+        print("  {} - {}".format(addr, name))
+        temp_data[name] = addr
+    
+    current_name = input("Please type the name of your phone : ")
+    current_mac = temp_data[current_name]
+
+    with open("config.json", "w") as f:
+        json.dump(config, f, indent=4)
 
 def trouver_peripheriques_bluetooth():
     devices = bluetooth.discover_devices(duration=8, lookup_names=True)
