@@ -42,8 +42,9 @@ def mesurer_distance_en_boucle():
 
         if peripheriques:
             for adresse_mac, nom in peripheriques:
-                distance = distance_bluetooth(adresse_mac)
-                print(f"Nom: {nom}, Adresse MAC: {adresse_mac}, Distance approximative: {distance:.2f} mètres")
+                if adresse_mac == config["macadress"]:
+                    distance = distance_bluetooth(adresse_mac)
+                    print(f"Nom: {nom}, Adresse MAC: {adresse_mac}, Distance approximative: {distance:.2f} mètres")
         else:
             print("Aucun périphérique Bluetooth trouvé.")
 
