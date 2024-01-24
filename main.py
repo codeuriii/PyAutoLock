@@ -16,6 +16,7 @@ if config['macadress'] == "":
     
     current_name = input("Please type the name of your phone : ")
     current_mac = temp_data[current_name]
+    config["macadress"] = current_mac
 
     with open("config.json", "w") as f:
         json.dump(config, f, indent=4)
