@@ -2,11 +2,15 @@ import bluetooth
 import time
 
 def trouver_peripheriques_bluetooth():
-    devices = bluetooth.discover_devices(duration=8, lookup_names=True, device_class=0)
+    devices = bluetooth.discover_devices(duration=8, lookup_names=True)
     return devices
 
 def distance_bluetooth(adresse_mac):
-    rssi = bluetooth.read_rssi(adresse_mac)
+    # Utilisez pybluez pour lire le RSSI
+    sock = bluetooth.BluetoothSocket(bluetooth.L2CAP)
+    sock.connect((adresse_mac, 1))
+    rssi = sock.getsockopt(bluetooth.SOL_BLUETOOTH, bluetooth.SO_RSSI, 1)
+    sock.close()
     distance = 10 ** ((-69 - rssi) / (10 * 2))
     return distance
 
@@ -15,7 +19,7 @@ def mesurer_distance_en_boucle():
         peripheriques = trouver_peripheriques_bluetooth()
 
         if peripheriques:
-            for adresse_mac, nom, _ in peripheriques:
+            for adresse_mac, nom in peripheriques:
                 distance = distance_bluetooth(adresse_mac)
                 print(f"Nom: {nom}, Adresse MAC: {adresse_mac}, Distance approximative: {distance:.2f} mètres")
         else:
