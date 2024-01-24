@@ -4,8 +4,10 @@ import json
 import os
 
 if os.path.exists("config.json"):
+    print("File config.json found")
     with open("config.json", "r") as f:
         config = json.load(f)
+    print("Successfully recovered configuration")
 else:
     print("config.json file not found")
     print("Scanning bluetooth devices...")
@@ -31,6 +33,7 @@ else:
 
 def trouver_peripheriques_bluetooth():
     devices = bluetooth.discover_devices(duration=8, lookup_names=True)
+    print(devices)
     return devices
 
 def distance_bluetooth(adresse_mac):
