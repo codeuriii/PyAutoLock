@@ -38,7 +38,7 @@ def trouver_peripheriques_bluetooth():
 
 def distance_bluetooth(adresse_mac):
     # Utilisez pybluez pour lire le RSSI
-    sock = bluetooth.BluetoothSocket(bluetooth.L2CAP)
+    sock = bluetooth.BluetoothSocket()
     sock.connect((adresse_mac, 1))
     rssi = sock.getsockopt(bluetooth.SOL_BLUETOOTH, bluetooth.SO_RSSI, 1)
     sock.close()
