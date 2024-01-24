@@ -32,6 +32,7 @@ else:
     print("Successfully dump config")
 
 def trouver_peripheriques_bluetooth():
+    print("Scanning devices...")
     devices = bluetooth.discover_devices(duration=8, lookup_names=True)
     return devices
 
@@ -51,13 +52,12 @@ def mesurer_distance_en_boucle():
         if peripheriques:
             for adresse_mac, nom in peripheriques:
                 if adresse_mac == config["macadress"]:
-                    distance = distance_bluetooth(adresse_mac)
+                    # distance = distance_bluetooth(adresse_mac)
+                    distance = 10
                     print(f"Nom: {nom}, Adresse MAC: {adresse_mac}, Distance approximative: {distance:.2f} mètres")
         else:
             print("Aucun périphérique Bluetooth trouvé.")
 
-        # Intervalle de 5 secondes entre chaque mesure
-        time.sleep(5)
 
 # Appeler la fonction pour mesurer en boucle
 mesurer_distance_en_boucle()
