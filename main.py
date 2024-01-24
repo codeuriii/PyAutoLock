@@ -17,6 +17,8 @@ else:
         temp_data[name] = addr
     
     current_name = input("Please type the name of your phone : ")
+    while current_name in temp_data.keys():
+        current_name = input("Sorry, can't find your phone, please type exactly your phone's name : ")
     current_mac = temp_data[current_name]
     config["macadress"] = current_mac
 
