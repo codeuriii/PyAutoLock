@@ -1,11 +1,13 @@
 import bluetooth
 import time
 import json
+import os
 
-with open("config.json", "r") as f:
-    config = json.load(f)
-
-if config['macadress'] == "":
+if os.path.exists("config.json"):
+    with open("config.json", "r") as f:
+        config = json.load(f)
+else:
+    config = {}
     temp_data = {}
     nearby_devices = bluetooth.discover_devices(lookup_names=True)
     print("Found {} devices.".format(len(nearby_devices)))
