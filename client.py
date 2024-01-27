@@ -1,13 +1,20 @@
+import socket
+import time
 
-import bluetooth
+# Adresse IP et port du serveur
+HOST = '127.0.0.1'
+PORT = 65432
 
-serverMACAddress = '00:1f:e1:dd:08:3d'
-port = 3
-s = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-s.connect((serverMACAddress, port))
-while 1:
-    text = input()
-    if text == "quit":
-        break
-    s.send(text)
-s.close()
+while True:
+    # Création d'un objet socket
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        # Connexion au serveur
+        client_socket.connect((HOST, PORT))
+        # Envoi de données au serveur
+        client_socket.sendall(b'Donnees envoyees par le client')
+        # Réception de la réponse du serveur
+        data = client_socket.recv(1024)
+
+    print('Reçu:', data.decode())
+    # Attente de 1 seconde avant d'envoyer une nouvelle fois des données
+    time.sleep(1)
